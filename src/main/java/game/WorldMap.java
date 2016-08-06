@@ -24,4 +24,14 @@ public class WorldMap {
     public void setGrid(ArrayList<ArrayList<MapSpace>> grid) {
         this.grid = grid;
     }
+
+    public int[] getBoundaries() {
+        int xLimit = grid.get(0).size();
+        int yLimit = grid.size();
+        return new int[]{xLimit,yLimit};
+    }
+
+    public MapSpace getSpaceAt(int[] position) {
+        return grid.get(position[1]).get(position[0]);
+    }
 }

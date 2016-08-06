@@ -1,5 +1,7 @@
 package game;
 
+import game.exceptions.WorldBoundary;
+
 public class Player {
 
     private final WorldMap map;
@@ -40,8 +42,25 @@ public class Player {
         return position;
     }
 
-    public void setPosition(int[] position) {
-        this.position = position;
+    public void setPosition(int[] newPosition) throws WorldBoundary {
+        if(isAtTheWorldEdge(newPosition)){
+            throw new WorldBoundary("You are at the edge of the world.");
+        }
+        this.position = newPosition;
     }
 
+    private boolean isAtTheWorldEdge(int[] newPosition) {
+        try{
+            map.grid.get(newPosition[1]).get(newPosition[0]);
+        }
+        catch (IndexOutOfBoundsException e){
+            return true;
+        }
+        return false;
+    }
+
+    public void move(int x, int y) throws WorldBoundary {
+        int[] newPosition = {position[0]+x, position[1]+y};
+        setPosition(newPosition);
+    }
 }
