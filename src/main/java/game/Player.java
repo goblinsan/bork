@@ -4,14 +4,10 @@ import game.exceptions.WorldBoundary;
 
 public class Player {
 
-    private final WorldMap map;
+    private WorldMap map;
     private Backpack backpack = new Backpack();
     private Direction currentlyFacing = Direction.NORTH;
-    private int[] position = {0,0};
-
-    public Player(WorldMap worldMap) {
-        this.map = worldMap;
-    }
+    private Coordinates position = new Coordinates(0,0);
 
     public WorldMap getMap() {
         return map;
@@ -22,7 +18,7 @@ public class Player {
     }
 
     public PlayerView getCurrentView() {
-        return map.getGrid().get(position[0]).get(position[1]).getPlayerView(currentlyFacing);
+        return map.getGrid().get(position.y).get(position.x).getPlayerView(currentlyFacing);
     }
 
     public Direction isFacing() {
@@ -38,20 +34,20 @@ public class Player {
         currentlyFacing = faceValue == 0 ? Direction.WEST : currentlyFacing.values()[faceValue - 1];
     }
 
-    public int[] getPosition() {
+    public Coordinates getPosition() {
         return position;
     }
 
-    public void setPosition(int[] newPosition) throws WorldBoundary {
+    public void setPosition(Coordinates newPosition) throws WorldBoundary {
         if(isAtTheWorldEdge(newPosition)){
             throw new WorldBoundary("You are at the edge of the world.");
         }
         this.position = newPosition;
     }
 
-    private boolean isAtTheWorldEdge(int[] newPosition) {
+    private boolean isAtTheWorldEdge(Coordinates newPosition) {
         try{
-            map.grid.get(newPosition[1]).get(newPosition[0]);
+            map.grid.get(newPosition.y).get(newPosition.x);
         }
         catch (IndexOutOfBoundsException e){
             return true;
@@ -60,7 +56,52 @@ public class Player {
     }
 
     public void move(int x, int y) throws WorldBoundary {
-        int[] newPosition = {position[0]+x, position[1]+y};
+        Coordinates newPosition = new Coordinates(position.x+x, position.y+y);
         setPosition(newPosition);
+    }
+
+    public void setMap(WorldMap map) {
+        this.map = map;
+    }
+
+    public void turnTo(Direction direction) {
+        currentlyFacing = direction;
+    }
+
+    public void turnAround() {
+        turnLeft();
+        turnLeft();
+    }
+
+    public void moveForward() throws WorldBoundary {
+        switch (currentlyFacing){
+            case NORTH:
+                move(0,-1);
+                return;
+            case EAST:
+                move(1,0);
+                return;
+            case SOUTH:
+                move(0,1);
+                return;
+            case WEST:
+                move(-1,0);
+                return;
+        }
+    }
+
+    public void moveRight() throws WorldBoundary {
+        turnRight();
+        moveForward();
+    }
+
+    public void moveLeft() throws WorldBoundary {
+        turnLeft();
+        moveForward();
+    }
+
+    public void moveBackwards() throws WorldBoundary {
+        turnAround();
+        moveForward();
     }
 }

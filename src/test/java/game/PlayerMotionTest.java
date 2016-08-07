@@ -1,54 +1,59 @@
 package game;
 
 import game.exceptions.WorldBoundary;
+import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class PlayerMotionTest {
 
-    WorldMap map = new WorldMap();
-    Player james = new Player(map);
+    Player james;
+
+    @Before
+    public void setUp() throws Exception {
+        WorldMap map = new WorldMap();
+        james = new Player();
+        james.setMap(map);
+    }
 
     @Test
     public void testPlayerStartsOnSpace0x0() {
-        int[] expectedPostion = {0,0};
-        assertTrue(Arrays.equals(expectedPostion, james.getPosition()));
+        Coordinates expectedPostion = new Coordinates(0,0);
+        assertEquals(expectedPostion, james.getPosition());
     }
 
     @Test
     public void testCanMovePlayer() throws WorldBoundary {
-        int[] newPostion = {6,7};
+        Coordinates newPostion = new Coordinates(6,7);
         james.setPosition(newPostion);
-        assertTrue(Arrays.equals(newPostion, james.getPosition()));
+        assertEquals(newPostion, james.getPosition());
     }
 
     @Test
     public void testPlayerCanMove() throws WorldBoundary {
-        int[] startingPostion = {2,6};
+        Coordinates startingPostion = new Coordinates(2,6);
         james.setPosition(startingPostion);
         james.move(1,1);
-        int[] expectedPostion = {3,7};
-        assertTrue(Arrays.equals(expectedPostion,james.getPosition()));
-        int[] nextExpectedPostion = {1,5};
+        Coordinates expectedPostion = new Coordinates(3,7);
+        assertEquals(expectedPostion,james.getPosition());
+        Coordinates nextExpectedPostion = new Coordinates(1,5);
         james.move(-2,-2);
-        assertTrue(Arrays.equals(nextExpectedPostion,james.getPosition()));
+        assertEquals(nextExpectedPostion,james.getPosition());
     }
 
     @Test
     public void testZeroYMove() throws WorldBoundary {
-        int[] nextExpectedPostion = {1,0};
+        Coordinates nextExpectedPostion = new Coordinates(1,0);
         james.move(1,0);
-        assertTrue(Arrays.equals(nextExpectedPostion,james.getPosition()));
+        assertEquals(nextExpectedPostion,james.getPosition());
     }
 
     @Test
     public void testZeroXMove() throws WorldBoundary {
-        int[] nextExpectedPostion = {0,1};
+        Coordinates nextExpectedPostion = new Coordinates(0,1);
         james.move(0,1);
-        assertTrue(Arrays.equals(nextExpectedPostion,james.getPosition()));
+        assertEquals(nextExpectedPostion,james.getPosition());
     }
 
     @Test(expected = WorldBoundary.class)
@@ -69,5 +74,46 @@ public class PlayerMotionTest {
     @Test(expected = WorldBoundary.class)
     public void testPlayerCantMoveOnePositiveBoundary() throws WorldBoundary {
         james.move(1,8);
+    }
+
+    @Test
+    public void testPlayerCanTurnToDirection(){
+        james.turnTo(Direction.SOUTH);
+        assertEquals(Direction.SOUTH, james.isFacing());
+    }
+
+    @Test
+    public void testPlayerCanTurnAround() {
+        james.turnAround();
+        assertEquals(Direction.SOUTH, james.isFacing());
+    }
+
+    @Test
+    public void testPlayerCanMoveForward() throws WorldBoundary {
+        james.turnAround();
+        james.moveForward();
+        Coordinates nextExpectedPostion = new Coordinates(0,1);
+        assertEquals(nextExpectedPostion,james.getPosition());
+    }
+    @Test
+    public void testPlayerCanMoveRight() throws WorldBoundary {
+        james.moveRight();
+        Coordinates nextExpectedPostion = new Coordinates(1,0);
+        assertEquals(nextExpectedPostion,james.getPosition());
+    }
+
+    @Test
+    public void testPlayerCanMoveLeft() throws WorldBoundary {
+        james.turnAround();
+        james.moveLeft();
+        Coordinates nextExpectedPostion = new Coordinates(1,0);
+        assertEquals(nextExpectedPostion,james.getPosition());
+    }
+
+    @Test
+    public void testPlayerCanMoveBackward() throws WorldBoundary {
+        james.moveBackwards();
+        Coordinates nextExpectedPostion = new Coordinates(0,1);
+        assertEquals(nextExpectedPostion,james.getPosition());
     }
 }

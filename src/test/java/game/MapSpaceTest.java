@@ -11,5 +11,6 @@ public class MapSpaceTest {
     @Test
     public void testMapSpaceHasPlayerView() {
         assertNotNull(testObject.getPlayerView(Direction.NORTH));
+        assertNotNull(testObject.getPlayerView(null));
     }
 }

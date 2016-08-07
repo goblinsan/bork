@@ -1,13 +1,20 @@
 package game;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
 public class PlayerOrientationTest {
 
-    WorldMap map = new WorldMap();
-    Player james = new Player(map);
+    Player james;
+
+    @Before
+    public void setUp() throws Exception {
+        WorldMap map = new WorldMap();
+        james = new Player();
+        james.setMap(map);
+    }
 
     @Test
     public void testByDefaultPlayerIsFacingNorth() {
