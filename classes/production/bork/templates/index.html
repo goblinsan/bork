@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script   src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+    <style type="text/css">
+    .console {
+      font-family:monospace;
+      color: #CCCCCC;
+      background: #000000;
+      padding: 10px;
+    }
+    </style>
+</head>
+<body class="console">
+<div th:text="${game.message}">game message</div>
+<form action="#" th:action="@{/}" th:object="${command}" method="post">
+    <p>Command: <input type="text" th:field="*{command}" /></p>
+    <p><input type="submit" value="Submit" /></p>
+</form>
+</body>
+</html>

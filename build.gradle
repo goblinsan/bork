@@ -1,8 +1,21 @@
 group 'com.goblinsan'
 version '1.0-SNAPSHOT'
 
+buildscript {
+    ext {
+        springBootVersion = '1.4.0.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'idea'
+apply plugin: 'spring-boot'
 
 task initSourceFolders { // add << before { to prevent executing during configuration phase
     sourceSets*.java.srcDirs*.each { it.mkdirs() }
@@ -17,5 +30,9 @@ repositories {
 }
 
 dependencies {
+    compile('org.springframework.boot:spring-boot-starter-data-rest')
+    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+    compile("org.springframework.boot:spring-boot-devtools")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }

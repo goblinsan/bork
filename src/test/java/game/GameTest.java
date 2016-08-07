@@ -3,8 +3,7 @@ package game;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 public class GameTest {
     Game testObject = new Game();
@@ -16,6 +15,17 @@ public class GameTest {
         Player player = new Player();
         player.setMap(world.getMap());
         testObject.addPlayer(player);
+    }
+
+    @Test
+    public void testNotInitialized() {
+        assertFalse(testObject.isInitialized());
+    }
+
+    @Test
+    public void testPrintMessage() {
+        assertEquals("Initialize game:", testObject.getMessage());
+
     }
 
     @Test

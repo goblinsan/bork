@@ -2,9 +2,8 @@ package game;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.*;
+import java.util.Arrays;
 
 public class WorldMapTest {
 
@@ -25,7 +24,7 @@ public class WorldMapTest {
 
     @Test
     public void testGetSpaceAtPosition() {
-        int[] position = {3,4};
+        Coordinates position = new Coordinates(3,4);
         assertNotNull(testObject.getSpaceAt(position));
     }
 }

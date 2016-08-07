@@ -31,7 +31,7 @@ public class WorldMap {
         return new int[]{xLimit,yLimit};
     }
 
-    public MapSpace getSpaceAt(int[] position) {
-        return grid.get(position[1]).get(position[0]);
+    public MapSpace getSpaceAt(Coordinates position) {
+        return grid.get(position.y).get(position.x);
     }
 }
