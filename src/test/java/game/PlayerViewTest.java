@@ -16,6 +16,16 @@ public class PlayerViewTest {
 
     @Test
     public void testViewDescribesDefaultBackground() {
-        assertEquals("You can't see very far ahead.",testObject.getBackground());
+        assertEquals("You can't see very far ahead.",testObject.getDescription());
+    }
+
+    @Test
+    public void testAboveDefault() {
+        assertEquals("Not much to see up there.", testObject.getAbove());
+    }
+
+    @Test
+    public void testBelowDefault() {
+        assertEquals("Nothing interesting down there.", testObject.getBelow());
     }
 }

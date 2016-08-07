@@ -22,7 +22,7 @@ public class Player {
     }
 
     public PlayerView getCurrentView() {
-        return map.getGrid().get(position[0]).get(position[1]).getPlayerView();
+        return map.getGrid().get(position[0]).get(position[1]).getPlayerView(currentlyFacing);
     }
 
     public Direction isFacing() {

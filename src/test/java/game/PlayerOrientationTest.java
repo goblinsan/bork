@@ -41,7 +41,7 @@ public class PlayerOrientationTest {
     @Test
     public void testPlayerCanSee() {
         MapSpace defaultSpace = new MapSpace();
-        PlayerView expectedView = defaultSpace.getPlayerView();
+        PlayerView expectedView = defaultSpace.getPlayerView(james.isFacing());
         assertEquals(expectedView, james.getCurrentView());
     }
 
