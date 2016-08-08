@@ -12,13 +12,17 @@ public class PlayerTest {
     @Before
     public void setUp() throws Exception {
         WorldMap map = new WorldMap();
-        james = new Player();
-        james.setMap(map);
+        james = new Player(map);
     }
 
     @Test
     public void testPlayerHasWorldMap() {
-        assertNotNull(james.getMap());
+        assertNotNull(james.getWorldMap());
+    }
+
+    @Test
+    public void testPlayerHasPlayerMap() {
+        assertNotNull(james.getPlayerMap());
     }
 
     @Test

@@ -4,13 +4,19 @@ import game.exceptions.WorldBoundary;
 
 public class Player {
 
-    private WorldMap map;
+    private final WorldMap worldMap;
     private Backpack backpack = new Backpack();
     private Direction currentlyFacing = Direction.NORTH;
     private Coordinates position = new Coordinates(0,0);
+    private PlayerMap playerMap;
 
-    public WorldMap getMap() {
-        return map;
+    public Player(WorldMap worldMap){
+        this.worldMap = worldMap;
+        playerMap = new PlayerMap(worldMap);
+    }
+
+    public WorldMap getWorldMap() {
+        return worldMap;
     }
 
     public Backpack getBackpack() {
@@ -18,7 +24,7 @@ public class Player {
     }
 
     public PlayerView getCurrentView() {
-        return map.getGrid().get(position.y).get(position.x).getPlayerView(currentlyFacing);
+        return worldMap.getGrid().get(position.y).get(position.x).getPlayerView(currentlyFacing);
     }
 
     public Direction isFacing() {
@@ -42,12 +48,13 @@ public class Player {
         if(isAtTheWorldEdge(newPosition)){
             throw new WorldBoundary("You are at the edge of the world.");
         }
+        playerMap.addSpace(position, newPosition, currentlyFacing);
         this.position = newPosition;
     }
 
     private boolean isAtTheWorldEdge(Coordinates newPosition) {
         try{
-            map.grid.get(newPosition.y).get(newPosition.x);
+            worldMap.grid.get(newPosition.y).get(newPosition.x);
         }
         catch (IndexOutOfBoundsException e){
             return true;
@@ -58,10 +65,6 @@ public class Player {
     public void move(int x, int y) throws WorldBoundary {
         Coordinates newPosition = new Coordinates(position.x+x, position.y+y);
         setPosition(newPosition);
-    }
-
-    public void setMap(WorldMap map) {
-        this.map = map;
     }
 
     public void turnTo(Direction direction) {
@@ -103,5 +106,9 @@ public class Player {
     public void moveBackwards() throws WorldBoundary {
         turnAround();
         moveForward();
+    }
+
+    public PlayerMap getPlayerMap() {
+        return playerMap;
     }
 }

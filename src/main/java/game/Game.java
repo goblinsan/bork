@@ -15,8 +15,7 @@ public class Game {
 
     public Game(){
         World newWorld = new World();
-        Player newPlayer = new Player();
-        newPlayer.setMap(newWorld.getMap());
+        Player newPlayer = new Player(newWorld.getMap());
         worlds.add(newWorld);
         players.add(newPlayer);
     }
@@ -86,6 +85,6 @@ public class Game {
     }
 
     private String getSpaceDescription(Player player) {
-        return player.getMap().getSpaceAt(player.getPosition()).getPlayerView(player.isFacing()).getDescription();
+        return player.getWorldMap().getSpaceAt(player.getPosition()).getPlayerView(player.isFacing()).getDescription();
     }
 }

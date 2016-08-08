@@ -23,6 +23,7 @@ public class GameMessages {
     @RequestMapping(name = "/", method = RequestMethod.GET)
     public ModelAndView index(Model model){
         model.addAttribute("command", new Command());
+        model.addAttribute("playerMapGrid", game.getPlayers().get(0).getPlayerMap().getGrid());
         return new ModelAndView("index", "game", game);
     }
 
@@ -30,6 +31,7 @@ public class GameMessages {
     public ModelAndView handleCommand(@ModelAttribute Command command, Model model){
         game.parseCommand(command);
         model.addAttribute(game);
+        model.addAttribute("playerMapGrid", game.getPlayers().get(0).getPlayerMap().getGrid());
         return new ModelAndView("index");
     }
 

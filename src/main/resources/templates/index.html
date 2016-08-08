@@ -17,5 +17,22 @@
     <p>Command: <input type="text" th:field="*{command}" /></p>
     <p><input type="submit" value="Submit" /></p>
 </form>
+
+<table th:if="${playerMapGrid}" >
+    <tr th:each="mapRow : ${playerMapGrid}" >
+        <td th:each="playerMapSpace : ${mapRow}" >
+            <div th:switch="${playerMapSpace.currentLocation}">
+                <div th:case="true" th:text="${playerMapSpace.displayChar}">.</div>
+                <div th:case="false">
+                    <div th:switch="${playerMapSpace.visited}">
+                        <div th:case="true" th:text="X">.</div>
+                        <div th:case="false" th:utext="'&amp;nbsp;'">.</div>
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
 </body>
 </html>

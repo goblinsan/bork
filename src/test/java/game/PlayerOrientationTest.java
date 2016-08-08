@@ -12,8 +12,7 @@ public class PlayerOrientationTest {
     @Before
     public void setUp() throws Exception {
         WorldMap map = new WorldMap();
-        james = new Player();
-        james.setMap(map);
+        james = new Player(map);
     }
 
     @Test
